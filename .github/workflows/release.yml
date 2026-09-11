@@ -45,6 +45,12 @@ jobs:
             -PmatrexKeyAlias="$KEY_ALIAS" \
             -PmatrexKeyPassword="$KEY_PASSWORD"
 
+      - name: Add Android build-tools to PATH
+        run: |
+          BUILD_TOOLS_DIR="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)"
+          test -n "$BUILD_TOOLS_DIR"
+          echo "$BUILD_TOOLS_DIR" >> "$GITHUB_PATH"
+
       - name: Verify signed APK
         working-directory: android
         run: |
